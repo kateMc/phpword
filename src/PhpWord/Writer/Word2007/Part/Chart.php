@@ -18,6 +18,7 @@
 namespace PhpOffice\PhpWord\Writer\Word2007\Part;
 
 use PhpOffice\PhpWord\Element\Chart as ChartElement;
+use PhpOffice\PhpWord\Element\ChartTitle;
 use PhpOffice\PhpWord\Shared\XMLWriter;
 
 /**
@@ -103,7 +104,11 @@ class Chart extends AbstractPart
     {
         $xmlWriter->startElement('c:chart');
 
-        $xmlWriter->writeElementBlock('c:autoTitleDeleted', 'val', 1);
+        $this->writeTitle($xmlWriter, $this->element->getChartTitle());
+
+        $xmlWriter->startElement('c:autoTitleDeleted');
+        $xmlWriter->writeAttribute('val', 0);
+        $xmlWriter->endElement();
 
         $this->writePlotArea($xmlWriter);
 
@@ -317,4 +322,34 @@ class Chart extends AbstractPart
         $xmlWriter->endElement(); // a:ln
         $xmlWriter->endElement(); // c:spPr
     }
+
+    /**
+     * Adds title to chart
+     *
+     * @param XMLWriter  $xmlWriter
+     * @param ChartTitle $chartTitle
+     */
+    private function writeTitle (XMLWriter $xmlWriter, $chartTitle = null)
+    {
+        $xmlWriter->startElement('c:title');
+        $xmlWriter->startElement('c:tx');
+        $xmlWriter->startElement('c:rich');
+        $xmlWriter->startElement('a:bodyPr');
+        $xmlWriter->endElement();
+        $xmlWriter->startElement('a:lstStyle');
+        $xmlWriter->endElement();
+        $xmlWriter->startElement('a:p');
+        $caption = "Testing Titles";
+        $xmlWriter->startElement('c:v');
+        $xmlWriter->writeRaw($caption);
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+        $xmlWriter->startElement('c:overlay');
+        $xmlWriter->writeAttribute('val', 0);
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+    }
+
 }
