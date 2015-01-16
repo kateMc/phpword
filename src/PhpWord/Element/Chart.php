@@ -55,18 +55,27 @@ class Chart extends AbstractElement
     private $style;
 
     /**
+     * Chart title
+     *
+     * @var ChartTitle
+     */
+    private $chartTitle;
+
+    /**
      * Create new instance
      *
      * @param string $type
-     * @param array $categories
-     * @param array $values
-     * @param array $style
+     * @param array  $categories
+     * @param array  $values
+     * @param array  $style
+     * @param string $chartTitle
      */
-    public function __construct($type, $categories, $values, $style = null)
+    public function __construct ($type, $categories, $values, $style = null, $chartTitle = null)
     {
         $this->setType($type);
         $this->addSeries($categories, $values);
-        $this->style = $this->setNewStyle(new ChartStyle(), $style, true);
+        $this->style      = $this->setNewStyle(new ChartStyle(), $style, true);
+        $this->chartTitle = $chartTitle;
     }
 
     /**
@@ -121,5 +130,10 @@ class Chart extends AbstractElement
     public function getStyle()
     {
         return $this->style;
+    }
+
+    public function getChartTitle ()
+    {
+        return $this->chartTitle;
     }
 }
