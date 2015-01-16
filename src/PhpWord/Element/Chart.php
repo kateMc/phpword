@@ -55,6 +55,9 @@ class Chart extends AbstractElement
     private $style;
 
     /**
+    /**
+     * @var ChartLayout $chartLayout
+    private $chartLayout;
      * Create new instance
      *
      * @param string $type
@@ -122,4 +125,11 @@ class Chart extends AbstractElement
     {
         return $this->style;
     }
+
+    /**
+     * @param ChartLayout $chartLayout
+     */
+    /**
+     * @return ChartLayout
+     */
 }
