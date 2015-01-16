@@ -18,6 +18,7 @@
 namespace PhpOffice\PhpWord\Writer\Word2007\Part;
 
 use PhpOffice\PhpWord\Element\Chart as ChartElement;
+use PhpOffice\PhpWord\Element\ChartLayout;
 use PhpOffice\PhpWord\Element\ChartTitle;
 use PhpOffice\PhpWord\Shared\XMLWriter;
 
@@ -349,6 +350,69 @@ class Chart extends AbstractPart
         $xmlWriter->startElement('c:overlay');
         $xmlWriter->writeAttribute('val', 0);
         $xmlWriter->endElement();
+        $xmlWriter->endElement();
+    }
+
+
+    //****** Adding this section for layout in for testing purposes only  *******//
+
+    private function _writeLayout (ChartLayout $layout = null, XMLWriter $xmlWriter)
+    {
+        $xmlWriter->startElement('c:layout');
+        if (!is_null($layout))
+        {
+            $xmlWriter->startElement('c:manualLayout');
+            $layoutTarget = $layout->getLayoutTarget();
+            if (!is_null($layoutTarget))
+            {
+                $xmlWriter->startElement('c:layoutTarget');
+                $xmlWriter->writeAttribute('val', $layoutTarget);
+                $xmlWriter->endElement();
+            }
+            $xMode = $layout->getXMode();
+            if (!is_null($xMode))
+            {
+                $xmlWriter->startElement('c:xMode');
+                $xmlWriter->writeAttribute('val', $xMode);
+                $xmlWriter->endElement();
+            }
+            $yMode = $layout->getYMode();
+            if (!is_null($yMode))
+            {
+                $xmlWriter->startElement('c:yMode');
+                $xmlWriter->writeAttribute('val', $yMode);
+                $xmlWriter->endElement();
+            }
+            $x = $layout->getXPosition();
+            if (!is_null($x))
+            {
+                $xmlWriter->startElement('c:x');
+                $xmlWriter->writeAttribute('val', $x);
+                $xmlWriter->endElement();
+            }
+            $y = $layout->getYPosition();
+            if (!is_null($y))
+            {
+                $xmlWriter->startElement('c:y');
+                $xmlWriter->writeAttribute('val', $y);
+                $xmlWriter->endElement();
+            }
+            $w = $layout->getWidth();
+            if (!is_null($w))
+            {
+                $xmlWriter->startElement('c:w');
+                $xmlWriter->writeAttribute('val', $w);
+                $xmlWriter->endElement();
+            }
+            $h = $layout->getHeight();
+            if (!is_null($h))
+            {
+                $xmlWriter->startElement('c:h');
+                $xmlWriter->writeAttribute('val', $h);
+                $xmlWriter->endElement();
+            }
+            $xmlWriter->endElement();
+        }
         $xmlWriter->endElement();
     }
 
