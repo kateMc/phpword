@@ -324,7 +324,7 @@ class Chart extends AbstractPart
         $xmlWriter->endElement(); // a:ln
         $xmlWriter->endElement(); // c:spPr
     }
-}
+
 
     /**
      * Write legend
