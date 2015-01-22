@@ -48,6 +48,13 @@ class Chart extends AbstractElement
     private $series = array();
 
     /**
+     * Chart Legend
+     *
+     * @var ChartLegend
+     */
+    protected $chartLegend;
+
+    /**
      * Chart style
      *
      * @var \PhpOffice\PhpWord\Style\Chart
@@ -121,5 +128,25 @@ class Chart extends AbstractElement
     public function getStyle()
     {
         return $this->style;
+    }
+
+    /**
+     * Add chartLegend
+     *
+     * @param $position
+     */
+    public function addChartLegend ($position = 'r')
+    {
+        $this->chartLegend = new ChartLegend($position);
+    }
+
+    /**
+     * Get chartLegend
+     *
+     * @return ChartLegend
+     */
+    public function getChartLegend ()
+    {
+        return $this->chartLegend;
     }
 }
