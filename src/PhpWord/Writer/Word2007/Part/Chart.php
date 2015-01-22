@@ -107,6 +107,13 @@ class Chart extends AbstractPart
 
         $this->writePlotArea($xmlWriter);
 
+        // Should this be here or in writeChartLegend?
+        // if we have a chartLegend to write
+        if ($this->element->getChartLegend() != null)
+        {
+            $this->writeLegend($xmlWriter);
+        }
+
         $xmlWriter->endElement(); // c:chart
     }
 
@@ -316,5 +323,23 @@ class Chart extends AbstractPart
         }
         $xmlWriter->endElement(); // a:ln
         $xmlWriter->endElement(); // c:spPr
+    }
+}
+
+    /**
+     * Write legend
+     *
+     * @link http://www.datypic.com/sc/ooxml/e-draw-chart_legend-1.html
+     *
+     * @param \PhpOffice\PhpWord\Shared\XMLWriter $xmlWriter
+     *
+     * @return void
+     */
+    private function writeLegend (XMLWriter $xmlWriter)
+    {
+        $position = $this->element->getChartLegend()->getChartLegendPosition();
+        $xmlWriter->startElement('c:legend');
+        $xmlWriter->writeElementBlock('c:legendPos', 'val', $position);
+        $xmlWriter->endElement(); // c:legend
     }
 }
